@@ -143,7 +143,7 @@ module.exports = (env, { mode = 'development' }) => {
 }
 EOF
 
-echo EOF  > tsconfig.json
+echo << EOF  > tsconfig.json
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
@@ -188,7 +188,7 @@ echo << EOF > src/public/index.html
 </html>
 EOF
 
-echo  << EOF > src/Index.tsx
+echo << EOF > src/Index.tsx
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from 'src/App'
@@ -268,7 +268,7 @@ body {
 }
 EOF 
 
-echo  << EOF > .eslintrc.json
+echo << EOF > .eslintrc.json
 {
   "extends": [
     "eslint:recommended",
