@@ -1,10 +1,10 @@
 #!/bin/bash
-git init
-gibo dump Node Sass > .gitignore
-git add .gitignore && git commit -m "init"
-
 # yarn start
 yarn init -y
+git init
+gibo dump Node Sass > .gitignore
+git add .gitignore && git commit -m "initial commit"
+
 
 # babel
  yarn add -D @babel/core \
@@ -54,7 +54,8 @@ yarn add -D eslint \
     husky \
     lint-staged
 
-echo """const path = require('path')
+echo << EOF  > webpack.config.js
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -139,9 +140,11 @@ module.exports = (env, { mode = 'development' }) => {
     ],
   }
   return config
-}""" > webpack.config.js
+}
+EOF
 
-echo '''{
+echo EOF  > tsconfig.json
+{
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "outDir": "./dist/",
@@ -161,17 +164,21 @@ echo '''{
     "node_modules",
     "dist",
   ],
-}''' > tsconfig.json
+}
+EOF
 
-echo '''{
+echo << EOF > tsconfig.paths.json
+{
   "compilerOptions": {
     "baseUrl": "src"
   }
-}''' > tsconfig.paths.json
-
+}
+EOF
 
 mkdir -p src/public
-echo """<html>
+
+echo << EOF > src/public/index.html
+<html>
   <head>
     <title>SampleClient</title>
   </head>
@@ -179,15 +186,17 @@ echo """<html>
     <div id='root'/>
   </body>
 </html>
-""" > src/public/index.html
+EOF
 
-echo """import React from 'react'
+echo  << EOF > src/Index.tsx
+import React from 'react'
 import ReactDOM from 'react-dom'
 import App from 'src/App'
 ReactDOM.render(<App />, document.getElementById('root'))
-""" > src/Index.tsx
+EOF
 
-echo """import React from 'react'
+echo << EOF > src/App.tsx 
+import React from 'react'
 import 'src/index.scss'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -223,7 +232,7 @@ export default function App(): JSX.Element {
   )
 }
 
-function Home() {
+function Home(): JSX.Element {
   return (
     <div>
       <h2>Home</h2>
@@ -231,7 +240,7 @@ function Home() {
   )
 }
 
-function About() {
+function About(): JSX.Element {
   return (
     <div>
       <h2>About</h2>
@@ -239,15 +248,16 @@ function About() {
   )
 }
 
-function Dashboard() {
+function Dashboard(): JSX.Element {
   return (
     <div>
       <h2>Dashboard</h2>
     </div>
   )
-}""" > src/App.tsx
+}
+EOF 
 
-echo """
+echo << EOF > src/index.scss
 body {
   margin: 0px;
   padding: 0px;
@@ -256,9 +266,10 @@ body {
     color: firebrick;
   }
 }
-""" > src/index.scss
+EOF 
 
-echo '''{
+echo  << EOF > .eslintrc.json
+{
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -297,7 +308,7 @@ echo '''{
     "@typescript-eslint/no-explicit-any": "off"
   }
 }
-''' > .eslintrc.json
+EOF
 
 # image copy
 mkdir -p src/img
@@ -308,7 +319,8 @@ yarn autoclean --init
 
 # finally, add commands
 sed -i '' -e '$ d' package.json
-echo '''  , "scripts": {
+echo << EOF >> package.json
+, "scripts": {
     "start": "webpack serve --open --hot",
     "build": "webpack --mode production",
     "format-autofix": "eslint src --ext .ts,.tsx --fix"
@@ -325,4 +337,4 @@ echo '''  , "scripts": {
     ]
   }
 }
-''' >> package.json
+EOF
