@@ -7,7 +7,7 @@ git add .gitignore && git commit -m "initial commit"
 
 
 # babel
- yarn add -D @babel/core \
+yarn add -D @babel/core \
     @babel/plugin-external-helpers \
     @babel/plugin-proposal-class-properties \
     @babel/plugin-proposal-object-rest-spread \
@@ -32,15 +32,15 @@ yarn add -D webpack \
     clean-webpack-plugin \
     source-map-loader \
     typescript \
-    ts-loader 
+    ts-loader
 
 # react
 yarn add react \
     react-dom \
     @types/react \
     @types/react-dom
-    
-# router 
+
+# router
 yarn add react-router-dom \
     @types/react-router-dom
 
@@ -54,7 +54,7 @@ yarn add -D eslint \
     husky \
     lint-staged
 
-echo << EOF  > webpack.config.js
+cat << EOF > webpack.config.js
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -143,7 +143,7 @@ module.exports = (env, { mode = 'development' }) => {
 }
 EOF
 
-echo << EOF  > tsconfig.json
+cat << EOF  > tsconfig.json
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
@@ -167,7 +167,7 @@ echo << EOF  > tsconfig.json
 }
 EOF
 
-echo << EOF > tsconfig.paths.json
+cat << EOF > tsconfig.paths.json
 {
   "compilerOptions": {
     "baseUrl": "src"
@@ -177,7 +177,7 @@ EOF
 
 mkdir -p src/public
 
-echo << EOF > src/public/index.html
+cat << EOF > src/public/index.html
 <html>
   <head>
     <title>SampleClient</title>
@@ -188,14 +188,14 @@ echo << EOF > src/public/index.html
 </html>
 EOF
 
-echo << EOF > src/Index.tsx
+cat << EOF > src/Index.tsx
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from 'src/App'
 ReactDOM.render(<App />, document.getElementById('root'))
 EOF
 
-echo << EOF > src/App.tsx 
+cat << EOF > src/App.tsx
 import React from 'react'
 import 'src/index.scss'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
@@ -255,9 +255,9 @@ function Dashboard(): JSX.Element {
     </div>
   )
 }
-EOF 
+EOF
 
-echo << EOF > src/index.scss
+cat << EOF > src/index.scss
 body {
   margin: 0px;
   padding: 0px;
@@ -266,9 +266,9 @@ body {
     color: firebrick;
   }
 }
-EOF 
+EOF
 
-echo << EOF > .eslintrc.json
+cat << EOF > .eslintrc.json
 {
   "extends": [
     "eslint:recommended",
@@ -319,7 +319,7 @@ yarn autoclean --init
 
 # finally, add commands
 sed -i '' -e '$ d' package.json
-echo << EOF >> package.json
+cat << EOF >> package.json
 , "scripts": {
     "start": "webpack serve --open --hot",
     "build": "webpack --mode production",
